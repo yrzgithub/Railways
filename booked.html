@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Ticket Booking Summary</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {    
+            text-align: center;
+            padding: 2%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Railway Ticket Booking Summary</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th>Q4</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>First Class (1A)</td>
+                <td><span id="1a-q1">0</span></td>
+                <td><span id="1a-q2">0</span></td>
+                <td><span id="1a-q3">0</span></td>
+                <td><span id="1a-q4">0</span></td>
+                <td><span id="1a-total">0</span></td>
+            </tr>
+            <tr>
+                <td>Second Class (2A)</td>
+                <td><span id="2a-q1">0</span></td>
+                <td><span id="2a-q2">0</span></td>
+                <td><span id="2a-q3">0</span></td>
+                <td><span id="2a-q4">0</span></td>
+                <td><span id="2a-total">0</span></td>
+            </tr>
+            <tr>
+                <td>Third Class (3A)</td>
+                <td><span id="3a-q1">0</span></td>
+                <td><span id="3a-q2">0</span></td>
+                <td><span id="3a-q3">0</span></td>
+                <td><span id="3a-q4">0</span></td>
+                <td><span id="3a-total">0</span></td>
+            </tr>
+                <tr>
+                <td>Sleeper Class (SL)</td>
+                <td><span id="sl-q1">0</span></td>
+                <td><span id="sl-q2">0</span></td>
+                <td><span id="sl-q3">0</span></td>
+                <td><span id="sl-q4">0</span></td>
+                <td><span id="sl-total">0</span></td>
+            </tr>
+            <tr>
+                <td>General (GEN)</td>
+                <td><span id="gen-q1">0</span></td>
+                <td><span id="gen-q2">0</span></td>
+                <td><span id="gen-q3">0</span></td>
+                <td><span id="gen-q4">0</span></td>
+                <td><span id="gen-total">0</span></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><b>Total</b></td>
+                <td><span id="total-q1">0</span></td>
+                <td><span id="total-q2">0</span></td>
+                <td><span id="total-q3">0</span></td>
+                <td><span id="total-q4">0</span></td>
+                <td><span id="grand-total">0</span></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        // Sample Data (Replace with your actual data source)
+        const ticketData = {
+            "1A": { q1: 10, q2: 15, q3: 20, q4: 25 },
+            "2A": { q1: 5, q2: 12, q3: 18, q4: 22 },
+            "3A": { q1: 8, q2: 10, q3: 15, q4: 20 },
+            "SL": { q1: 20, q2: 30, q3: 40, q4: 50 },
+            "GEN": { q1: 30, q2: 40, q3: 50, q4: 60 },
+        };
+
+        function updateTable() {
+            let grandTotal = 0;
+            let totalQ1 = 0;
+            let totalQ2 = 0;
+            let totalQ3 = 0;
+            let totalQ4 = 0;
+
+
+            for (const classType in ticketData) {
+                const data = ticketData[classType];
+                const q1 = data.q1 || 0;
+                const q2 = data.q2 || 0;
+                const q3 = data.q3 || 0;
+                const q4 = data.q4 || 0;
+                const total = q1 + q2 + q3 + q4;
+
+                document.getElementById(`${classType.toLowerCase()}-q1`).textContent = q1;
+                document.getElementById(`${classType.toLowerCase()}-q2`).textContent = q2;
+                document.getElementById(`${classType.toLowerCase()}-q3`).textContent = q3;
+                document.getElementById(`${classType.toLowerCase()}-q4`).textContent = q4;
+                document.getElementById(`${classType.toLowerCase()}-total`).textContent = total;
+
+                grandTotal += total;
+                totalQ1 += q1;
+                totalQ2 += q2;
+                totalQ3 += q3;
+                totalQ4 += q4;
+
+            }
+            document.getElementById('total-q1').textContent = totalQ1;
+            document.getElementById('total-q2').textContent = totalQ2;
+            document.getElementById('total-q3').textContent = totalQ3;
+            document.getElementById('total-q4').textContent = totalQ4;
+            document.getElementById('grand-total').textContent = grandTotal;
+        }
+
+        updateTable();
+
+    </script>
+
+</body>
+</html>

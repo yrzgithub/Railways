@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Ticket Booking</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        form {
+            width: 50%;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 40px;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            width: 90%;
+            display: block;
+            margin: 0 auto;
+            font-size: medium;
+            margin-top: 5%;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #trains-available {
+            margin-top: 10px;
+        }
+        h1 {
+            text-align: center;
+            padding: 1%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Railway Ticket Booking</h1>
+
+    <form id="booking-form">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="mobile">Mobile Number:</label>
+        <input type="tel" id="mobile" name="mobile" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" min="1" required>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="booking-station">Booking Station:</label>
+        <input type="text" id="booking-station" name="booking-station" required>
+
+        <label for="destination-station">Destination Station:</label>
+        <input type="text" id="destination-station" name="destination-station" required>
+
+        <label for="ticket-category">Ticket Category:</label>
+        <select id="ticket-category" name="ticket-category">
+            <option value="general">General</option>
+            <option value="childeren">Children</option>
+            </select>
+
+        <label for="no-of-tickets">Number of Tickets:</label>
+        <input type="number" id="no-of-tickets" name="no-of-tickets" min="1" required>
+
+        <div id="trains-available">
+            <h2>Trains Available:</h2>
+            <select id="train-selection" name="train-selection">
+                <option>Lalbagh SF Express</option>
+                <option>Palakad Express</option>
+                <option>Cheran Express</option>
+                <option>Tiruvanathapuram SF Express</option>
+            </select>
+        </div>
+
+        <button type="button">Book Ticket</button>
+    </form>
+
+</body>
+</html>
