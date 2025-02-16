@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Customer Information</title>
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  button {
+    padding: 8px 16px;
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  /* Style the form for adding new customers (optional) */
+  #addCustomerForm {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+  }
+  #addCustomerForm label {
+      display: block;
+      margin-bottom: 5px;
+  }
+  #addCustomerForm input[type="text"], #addCustomerForm input[type="tel"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+  }
+
+</style>
+</head>
+<body>
+
+<h1>Customer Information</h1>
+
+<table id="customerTable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Mobile Number</th>
+      <th>Tickets Booked</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    </tbody>
+</table>
+
+<h2>Add New Customer (Optional)</h2>
+<form id="addCustomerForm">
+  <label for="newName">Name:</label>
+  <input type="text" id="newName" required><br><br>
+
+  <label for="newMobile">Mobile Number:</label>
+  <input type="tel" id="newMobile" required><br><br>
+
+  <button type="button" onclick="addCustomer()">Add</button>
+</form>
+
+<script>
+  const customerTable = document.getElementById('customerTable').getElementsByTagName('tbody')[0];
+
+  let customers = [ // Sample customer data (replace with your data source)
+    { id: 1, name: "John Doe", mobile: "123-456-7890", tickets: 5 },
+    { id: 2, name: "Jane Smith", mobile: "987-654-3210", tickets: 2 },
+    { id: 3, name: "Peter Jones", mobile: "555-123-4567", tickets: 10 }
+  ];
+
+  function displayCustomers() {
+    customerTable.innerHTML = ""; // Clear existing rows
+
+    customers.forEach(customer => {
+      const row = customerTable.insertRow();
+      const idCell = row.insertCell();
+      const nameCell = row.insertCell();
+      const mobileCell = row.insertCell();
+      const ticketsCell = row.insertCell();
+      const actionsCell = row.insertCell();
+
+      idCell.textContent = customer.id;
+      nameCell.textContent = customer.name;
+      mobileCell.textContent = customer.mobile;
+      ticketsCell.textContent = customer.tickets;
+
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = "Delete";
+      deleteButton.onclick = () => deleteCustomer(customer.id);
+      actionsCell.appendChild(deleteButton);
+    });
+  }
+
+  function deleteCustomer(id) {
+    customers = customers.filter(customer => customer.id !== id);
+    displayCustomers(); // Refresh the table
+  }
+
+  function addCustomer() {
+    const newName = document.getElementById('newName').value;
+    const newMobile = document.getElementById('newMobile').value;
+
+    // Basic validation (you can add more robust checks)
+    if (!newName || !newMobile) {
+        alert("Please enter both name and mobile number.");
+        return;
+    }
+
+    const newId = customers.length > 0 ? customers[customers.length - 1].id + 1 : 1; // Generate a new ID
+    const newCustomer = { id: newId, name: newName, mobile: newMobile, tickets: 0 }; // Default tickets to 0
+    customers.push(newCustomer);
+    displayCustomers();
+
+    // Clear the form fields after adding
+    document.getElementById('newName').value = "";
+    document.getElementById('newMobile').value = "";
+  }
+
+  displayCustomers(); // Initial display of customers
+</script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Tickets</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left; /* Align text to the left */
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure it's on top */
+        }
+        .popup button {
+            margin: 0 10px;
+        }
+        h1 {
+            padding: 1%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>View Tickets</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ticket ID</th>
+                <th>Train ID</th>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>Boarding Station</th>
+                <th>Destination</th>
+                <th>Boarding Time</th>
+                <th>Arrival Time</th>
+                <th>No. of Tickets</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="ticket-table-body"></tbody>
+    </table>
+
+    <div id="cancel-popup" class="popup">
+        <p>Are you sure you want to cancel this ticket?</p>
+        <button id="confirm-cancel">Yes</button>
+        <button id="cancel-popup-close">No</button>
+    </div>
+
+    <script>
+        const tickets = [
+            { ticketId: "T123", trainId: "TR456", userId: "U789", userName: "Sanjay Kumar Y R", boardingStation: "MAS Central", destination: "Arakkonam", boardingTime: "10:00 AM", arrivalTime: "12:00 AM", noOfTickets: 1 },
+            { ticketId: "T456", trainId: "TR789", userId: "U123", userName: "Santhosh", boardingStation: "MAS Central", destination: "Avadi", boardingTime: "2:00 PM", arrivalTime: "4:00 PM", noOfTickets: 4 },
+            { ticketId: "T455", trainId: "TR787", userId: "U124", userName: "Preethi Senior", boardingStation: "MAS Central", destination: "Korattur", boardingTime: "6:00 PM", arrivalTime: "7:00 PM", noOfTickets: 4 }
+            // ... more tickets
+        ];
+
+        const tableBody = document.getElementById("ticket-table-body");
+        const cancelPopup = document.getElementById("cancel-popup");
+        const confirmCancelButton = document.getElementById("confirm-cancel");
+        const cancelPopupButtonClose = document.getElementById("cancel-popup-close");
+        let ticketToCancel = null; // Store the ticket to be cancelled
+
+        function populateTable() {
+            tableBody.innerHTML = ""; // Clear existing rows
+
+            tickets.forEach(ticket => {
+                const row = tableBody.insertRow();
+                Object.values(ticket).forEach(value => {
+                    const cell = row.insertCell();
+                    cell.textContent = value;
+                });
+
+                const actionCell = row.insertCell();
+                const cancelButton = document.createElement("button");
+                cancelButton.textContent = "Cancel";
+                cancelButton.addEventListener("click", () => showCancelPopup(ticket));
+                actionCell.appendChild(cancelButton);
+            });
+        }
+
+        function showCancelPopup(ticket) {
+            ticketToCancel = ticket; // Store the ticket to be cancelled
+            cancelPopup.style.display = "block";
+        }
+
+        confirmCancelButton.addEventListener("click", () => {
+            if (ticketToCancel) {
+                // In a real application, you would send a request to your server
+                // to cancel the ticket with the ID `ticketToCancel.ticketId`.
+
+                console.log("Cancelling ticket:", ticketToCancel.ticketId);
+                // Remove the ticket from the table (for demo purposes)
+                const index = tickets.indexOf(ticketToCancel);
+                if (index > -1) {
+                    tickets.splice(index, 1);
+                }
+                populateTable(); // Refresh the table
+                cancelPopup.style.display = "none";
+                ticketToCancel = null; // Reset
+                alert("Ticket cancelled successfully! (Demo)"); // Replace with actual cancellation logic
+            }
+        });
+
+        cancelPopupButtonClose.addEventListener("click", () => {
+            cancelPopup.style.display = "none";
+            ticketToCancel = null; // Reset
+        });
+
+        populateTable(); // Populate the table initially
+    </script>
+
+</body>
+</html>
