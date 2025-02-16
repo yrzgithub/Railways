@@ -43,16 +43,164 @@
         .auth-buttons a {
             margin-left: 10px; /* Space between buttons */
         }
+
+        body {
+            font-family: sans-serif;
+        }
+
+        .booked table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .booked th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .booked th {
+            background-color: #f2f2f2;
+        }
+        .booked h1 {    
+            text-align: center;
+            padding: 2%;
+        }
+        
+
+        .book form {
+            width: 50%;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 40px;
+            border-radius: 8px;
+        }
+        .book label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .book input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .book button {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            width: 90%;
+            display: block;
+            margin: 0 auto;
+            font-size: medium;
+            margin-top: 5%;
+            border: none;
+            cursor: pointer;
+        }
+        .book button:hover {
+            background-color: #0056b3;
+        }
+        .book #trains-available {
+            margin-top: 10px;
+        }
+        .book h1 {
+            text-align: center;
+            padding: 1%;
+        }
+
+
+        .view table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .view th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left; /* Align text to the left */
+        }
+        .view th {
+            background-color: #f2f2f2;
+        }
+        .view .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure it's on top */
+        }
+        .view .popup button {
+            margin: 0 10px;
+        }
+        .view h1 {
+            padding: 1%;
+            text-align: center;
+        }
+
+
+        .update form {
+            width: 30%;
+            margin: 0 auto;
+            padding: 40px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+          }
+          .update label {
+            display: block;
+            margin-bottom: 8px;
+          }
+          .update input[type="text"],
+          input[type="email"],
+          input[type="tel"],
+          input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+          }
+          .update button {
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: medium;
+            border-radius: 5px; 
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 25px;
+            width: 95%;
+          }
+          .update .error {
+            color: red;
+          }
+          .update button:hover {
+            background-color: #0056b3;
+        }
+        .update h1 {
+            text-align: center;
+            padding: 1%;
+          }
     </style>
 </head>
 <body>
 
     <nav>
         <ul>
-            <li onclick="getPage('booked.html')"><a>Booked Tickets</a></li>
-            <li onclick="getPage('book.html')"><a>Book Tickets</a></li>
-            <li onclick="getPage('view_ticket.html')"><a>View Tickets</a></li> 
-            <li onclick="getPage('update.html')"><a>Update Details</a></li>
+            <li data-target="booked"><a>Booked Tickets</a></li>
+            <li data-target="book"><a>Book Tickets</a></li>
+            <li data-target="view_ticket"><a>View Tickets</a></li> 
+            <li data-target="update"><a>Update Details</a></li>
         </ul>
 
         <div class="auth-buttons">
@@ -61,21 +209,383 @@
             <a href="#">Logout</a> </div>
     </nav>
 
-    <div id="page"></div>
-    
-    <script>
+    <div id="page">
+        <div id="booked" class="content">
+            <h1>Railway Ticket Booking Summary</h1>
 
-        function getPage(page)
-        {
-            fetch(page)
-            .then(response=>response.text())
-            .then(html=>{
-                var container = document.getElementById("page");
-                container.innerHTML = html;
+            <table>
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Q1</th>
+                        <th>Q2</th>
+                        <th>Q3</th>
+                        <th>Q4</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First Class (1A)</td>
+                        <td><span id="1a-q1">0</span></td>
+                        <td><span id="1a-q2">0</span></td>
+                        <td><span id="1a-q3">0</span></td>
+                        <td><span id="1a-q4">0</span></td>
+                        <td><span id="1a-total">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Second Class (2A)</td>
+                        <td><span id="2a-q1">0</span></td>
+                        <td><span id="2a-q2">0</span></td>
+                        <td><span id="2a-q3">0</span></td>
+                        <td><span id="2a-q4">0</span></td>
+                        <td><span id="2a-total">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Third Class (3A)</td>
+                        <td><span id="3a-q1">0</span></td>
+                        <td><span id="3a-q2">0</span></td>
+                        <td><span id="3a-q3">0</span></td>
+                        <td><span id="3a-q4">0</span></td>
+                        <td><span id="3a-total">0</span></td>
+                    </tr>
+                        <tr>
+                        <td>Sleeper Class (SL)</td>
+                        <td><span id="sl-q1">0</span></td>
+                        <td><span id="sl-q2">0</span></td>
+                        <td><span id="sl-q3">0</span></td>
+                        <td><span id="sl-q4">0</span></td>
+                        <td><span id="sl-total">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>General (GEN)</td>
+                        <td><span id="gen-q1">0</span></td>
+                        <td><span id="gen-q2">0</span></td>
+                        <td><span id="gen-q3">0</span></td>
+                        <td><span id="gen-q4">0</span></td>
+                        <td><span id="gen-total">0</span></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><b>Total</b></td>
+                        <td><span id="total-q1">0</span></td>
+                        <td><span id="total-q2">0</span></td>
+                        <td><span id="total-q3">0</span></td>
+                        <td><span id="total-q4">0</span></td>
+                        <td><span id="grand-total">0</span></td>
+                    </tr>
+                </tfoot>
+            </table>
+        
+            <script>
+                // Sample Data (Replace with your actual data source)
+                const ticketData = {
+                    "1A": { q1: 10, q2: 15, q3: 20, q4: 25 },
+                    "2A": { q1: 5, q2: 12, q3: 18, q4: 22 },
+                    "3A": { q1: 8, q2: 10, q3: 15, q4: 20 },
+                    "SL": { q1: 20, q2: 30, q3: 40, q4: 50 },
+                    "GEN": { q1: 30, q2: 40, q3: 50, q4: 60 },
+                };
+        
+                function updateTable() {
+                    let grandTotal = 0;
+                    let totalQ1 = 0;
+                    let totalQ2 = 0;
+                    let totalQ3 = 0;
+                    let totalQ4 = 0;
+        
+        
+                    for (const classType in ticketData) {
+                        const data = ticketData[classType];
+                        const q1 = data.q1 || 0;
+                        const q2 = data.q2 || 0;
+                        const q3 = data.q3 || 0;
+                        const q4 = data.q4 || 0;
+                        const total = q1 + q2 + q3 + q4;
+        
+                        document.getElementById(`${classType.toLowerCase()}-q1`).textContent = q1;
+                        document.getElementById(`${classType.toLowerCase()}-q2`).textContent = q2;
+                        document.getElementById(`${classType.toLowerCase()}-q3`).textContent = q3;
+                        document.getElementById(`${classType.toLowerCase()}-q4`).textContent = q4;
+                        document.getElementById(`${classType.toLowerCase()}-total`).textContent = total;
+        
+                        grandTotal += total;
+                        totalQ1 += q1;
+                        totalQ2 += q2;
+                        totalQ3 += q3;
+                        totalQ4 += q4;
+        
+                    }
+                    document.getElementById('total-q1').textContent = totalQ1;
+                    document.getElementById('total-q2').textContent = totalQ2;
+                    document.getElementById('total-q3').textContent = totalQ3;
+                    document.getElementById('total-q4').textContent = totalQ4;
+                    document.getElementById('grand-total').textContent = grandTotal;
+                }
+        
+                updateTable();
+        
+            </script>
+        </div>
+
+        <div id="book" class="content">
+            <h1>Railway Ticket Booking</h1>
+
+            <form id="booking-form">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" required>
+        
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+        
+                <label for="mobile">Mobile Number:</label>
+                <input type="tel" id="mobile" name="mobile" required>
+        
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="1" required>
+        
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+        
+                <label for="booking-station">Booking Station:</label>
+                <input type="text" id="booking-station" name="booking-station" required>
+        
+                <label for="destination-station">Destination Station:</label>
+                <input type="text" id="destination-station" name="destination-station" required>
+        
+                <label for="ticket-category">Ticket Category:</label>
+                <select id="ticket-category" name="ticket-category">
+                    <option value="general">General</option>
+                    <option value="childeren">Children</option>
+                    </select>
+        
+                <label for="no-of-tickets">Number of Tickets:</label>
+                <input type="number" id="no-of-tickets" name="no-of-tickets" min="1" required>
+        
+                <div id="trains-available">
+                    <h2>Trains Available:</h2>
+                    <select id="train-selection" name="train-selection">
+                        <option>Lalbagh SF Express</option>
+                        <option>Palakad Express</option>
+                        <option>Cheran Express</option>
+                        <option>Tiruvanathapuram SF Express</option>
+                    </select>
+                </div>
+        
+                <button type="button">Book Ticket</button>
+            </form>
+        </div>
+
+        <div class="content" id="view_ticket">
+                
+    <h1>View Tickets</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ticket ID</th>
+                <th>Train ID</th>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>Boarding Station</th>
+                <th>Destination</th>
+                <th>Boarding Time</th>
+                <th>Arrival Time</th>
+                <th>No. of Tickets</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="ticket-table-body"></tbody>
+    </table>
+
+    <div id="cancel-popup" class="popup">
+        <p>Are you sure you want to cancel this ticket?</p>
+        <button id="confirm-cancel">Yes</button>
+        <button id="cancel-popup-close">No</button>
+    </div>
+
+    <script>
+        const tickets = [
+            { ticketId: "T123", trainId: "TR456", userId: "U789", userName: "Sanjay Kumar Y R", boardingStation: "MAS Central", destination: "Arakkonam", boardingTime: "10:00 AM", arrivalTime: "12:00 AM", noOfTickets: 1 },
+            { ticketId: "T456", trainId: "TR789", userId: "U123", userName: "Santhosh", boardingStation: "MAS Central", destination: "Avadi", boardingTime: "2:00 PM", arrivalTime: "4:00 PM", noOfTickets: 4 },
+            { ticketId: "T455", trainId: "TR787", userId: "U124", userName: "Preethi Senior", boardingStation: "MAS Central", destination: "Korattur", boardingTime: "6:00 PM", arrivalTime: "7:00 PM", noOfTickets: 4 }
+            // ... more tickets
+        ];
+
+        const tableBody = document.getElementById("ticket-table-body");
+        const cancelPopup = document.getElementById("cancel-popup");
+        const confirmCancelButton = document.getElementById("confirm-cancel");
+        const cancelPopupButtonClose = document.getElementById("cancel-popup-close");
+        let ticketToCancel = null; // Store the ticket to be cancelled
+
+        function populateTable() {
+            tableBody.innerHTML = ""; // Clear existing rows
+
+            tickets.forEach(ticket => {
+                const row = tableBody.insertRow();
+                Object.values(ticket).forEach(value => {
+                    const cell = row.insertCell();
+                    cell.textContent = value;
+                });
+
+                const actionCell = row.insertCell();
+                const cancelButton = document.createElement("button");
+                cancelButton.textContent = "Cancel";
+                cancelButton.addEventListener("click", () => showCancelPopup(ticket));
+                actionCell.appendChild(cancelButton);
             });
         }
 
-        getPage("book.html");
+        function showCancelPopup(ticket) {
+            ticketToCancel = ticket; // Store the ticket to be cancelled
+            cancelPopup.style.display = "block";
+        }
+
+        confirmCancelButton.addEventListener("click", () => {
+            if (ticketToCancel) {
+                // In a real application, you would send a request to your server
+                // to cancel the ticket with the ID `ticketToCancel.ticketId`.
+
+                console.log("Cancelling ticket:", ticketToCancel.ticketId);
+                // Remove the ticket from the table (for demo purposes)
+                const index = tickets.indexOf(ticketToCancel);
+                if (index > -1) {
+                    tickets.splice(index, 1);
+                }
+                populateTable(); // Refresh the table
+                cancelPopup.style.display = "none";
+                ticketToCancel = null; // Reset
+                alert("Ticket cancelled successfully! (Demo)"); // Replace with actual cancellation logic
+            }
+        });
+
+        cancelPopupButtonClose.addEventListener("click", () => {
+            cancelPopup.style.display = "none";
+            ticketToCancel = null; // Reset
+        });
+
+        populateTable(); // Populate the table initially
+    </script>
+
+        </div>
+
+        <div class="content" id="update">
+            <h1>Update Your Details</h1>
+
+<form id="updateForm">
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required>
+  <span id="emailError" class="error"></span><br><br>
+
+  <label for="mobile">Mobile Number:</label>
+  <input type="tel" id="mobile" name="mobile" required>
+  <span id="mobileError" class="error"></span><br><br>
+
+  <label for="address">Address:</label>
+  <input type="text" id="address" name="address" required>
+  <span id="addressError" class="error"></span><br><br>
+
+  <h2>Update Password</h2>
+  <label for="currentPassword">Current Password:</label>
+  <input type="password" id="currentPassword" name="currentPassword" required>
+  <span id="currentPasswordError" class="error"></span><br><br>
+
+  <label for="newPassword">New Password:</label>
+  <input type="password" id="newPassword" name="newPassword" required>
+  <span id="newPasswordError" class="error"></span><br><br>
+
+  <label for="confirmPassword">Confirm New Password:</label>
+  <input type="password" id="confirmPassword" name="confirmPassword" required>
+  <span id="confirmPasswordError" class="error"></span><br><br>
+
+  <button type="submit">Update</button>
+</form>
+
+<script>
+  const form = document.getElementById('updateForm');
+  const emailError = document.getElementById('emailError');
+  const mobileError = document.getElementById('mobileError');
+  const addressError = document.getElementById('addressError');
+  const currentPasswordError = document.getElementById('currentPasswordError');
+  const newPasswordError = document.getElementById('newPasswordError');
+  const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form from actually submitting
+
+    // Reset error messages
+    emailError.textContent = "";
+    mobileError.textContent = "";
+    addressError.textContent = "";
+    currentPasswordError.textContent = "";
+    newPasswordError.textContent = "";
+    confirmPasswordError.textContent = "";
+
+    // Validation
+    let isValid = true;
+
+    if (!form.email.value) {
+      emailError.textContent = "Email is required.";
+      isValid = false;
+    }
+
+    if (!form.mobile.value) {
+      mobileError.textContent = "Mobile number is required.";
+      isValid = false;
+    }
+
+    if (!form.address.value) {
+      addressError.textContent = "Address is required.";
+      isValid = false;
+    }
+
+    if (!form.currentPassword.value) {
+      currentPasswordError.textContent = "Current password is required.";
+      isValid = false;
+    }
+
+    if (!form.newPassword.value) {
+      newPasswordError.textContent = "New password is required.";
+      isValid = false;
+    }
+
+    if (form.newPassword.value !== form.confirmPassword.value) {
+      confirmPasswordError.textContent = "Passwords do not match.";
+      isValid = false;
+    }
+
+    if (isValid) {
+      // Here you would typically send the form data to the server
+      // using AJAX or fetch API.  For this example, we'll just
+      // display a success message.
+      alert("Details updated successfully!");
+      form.reset(); // Clear the form
+    }
+  });
+</script>
+        </div>
+    </div>
+    
+    <script>
+
+        const navLinks = document.querySelectorAll('nav a');
+        const contentSections = document.querySelectorAll(".content");
+        
+        navLinks.forEach(link => {
+          link.addEventListener('click', (event) => {
+            event.preventDefault();
+      
+            const targetId = link.dataset.target;
+      
+            contentSections.forEach(section => {
+                
+              if(targetId==section.id) {
+                
+              }
+            });
+          });
+        });
 
     </script>
 
