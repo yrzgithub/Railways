@@ -72,13 +72,6 @@
             .then(html=>{
                 var container = document.getElementById("page");
                 container.innerHTML = html;
-
-                /*const scriptsToExecute = container.querySelector("script"); // Target by class
-                scriptsToExecute.forEach(script => {
-                const newScript = document.createElement('script');
-                newScript.textContent = script.textContent;
-                script.parentNode.replaceChild(newScript, script); 
-                }); */
             });
         }
 

@@ -27,7 +27,11 @@
   #addCustomerForm {
       margin-top: 20px;
       border: 1px solid #ccc;
-      padding: 10px;
+      padding: 30px;
+      width: 40%;
+      display: block;
+      margin: auto;
+      border-radius: 5px;
   }
   #addCustomerForm label {
       display: block;
@@ -38,6 +42,10 @@
       padding: 8px;
       margin-bottom: 10px;
       box-sizing: border-box;
+  }
+
+  h2 {
+    text-align: center;
   }
 
 </style>
@@ -60,7 +68,7 @@
     </tbody>
 </table>
 
-<h2>Add New Customer (Optional)</h2>
+<h2>Add New Customer</h2>
 <form id="addCustomerForm">
   <label for="newName">Name:</label>
   <input type="text" id="newName" required><br><br>
